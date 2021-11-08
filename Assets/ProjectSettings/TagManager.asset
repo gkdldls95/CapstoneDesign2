@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - FxTemporaire
-  - Capsule
   layers:
   - Default
   - TransparentFX
@@ -19,7 +18,7 @@ TagManager:
   - Bomb
   - Enemy
   - gun
-  - 
+  - BoomHitBox
   - 
   - 
   - 

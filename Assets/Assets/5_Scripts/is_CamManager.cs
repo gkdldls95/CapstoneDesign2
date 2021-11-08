@@ -45,15 +45,18 @@ public class is_CamManager : MonoBehaviour
 
     void Update()
     {
+        if (is_GManager.gm.gState != is_GManager.GameState.Run)
+        {
+            return;
+        }
         /*if (!PV.IsMine)
         {
-            //Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            GameObject.Find("Canvas").SetActive(false);
            return; 
-       }
+       }*/
 
-        else
-        {*/
-            view();
+        view();
         //}
         //transform.position = player.GetComponent<CamPosition>().transform.position;
         //사용자의 마우스 입력을 받아 물체를 회전시키고 싶다.

@@ -9,6 +9,7 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+
     }//  IPunObservable 함수????
 
     public PhotonView PV;
@@ -23,6 +24,7 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     float yVelocity = 0;
 
     float mx = 0;
+    float mxx = 0;
     public float rotSpeed = 1500f;
     public float jumpPower = 3f;
 
@@ -46,31 +48,81 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         //캐릭터 콘트롤러 컴포넌트 받아오기
         cc = GetComponent<CharacterController>();
         HP = HPText.GetComponent<Text>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (is_GManager.gm.gState != is_GManager.GameState.Run) //**10주차 추가 부분
+        if (is_GManager.gm.gState != is_GManager.GameState.Run)
         {
             return;
         }
-
 
         if (!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(GetComponentInChildren<Canvas>().gameObject);
             return;
         }
-        /*
-        if(is_GManager.gm.gState != is_GManager.GameState.Run) //**10주차 추가 부분
-        {
-            return;
-        }
-        */
+
 
         is_PlayerRotate();
+        is_PlayerMove();
 
+        if (hp > maxHp)
+        { hp = maxHp; }
+        HP.text = hp + " / " + maxHp;
+        hpSlider.value = (float)hp / (float)maxHp; // Slider오브젝트의 value값은 현재체력을 최대체력으로 나눈 값으로 반영된다.
+                                                   //체력을 상대적으로 생각하기 때문이다. **8주차 추가 부분
+
+    }
+
+    // 플레이어의 피격 함수 **7주차 추가 부분
+    [PunRPC]
+    public void DamageAction(int damage)
+    {
+        // 에너미의 공격력만큼 플레이어의 체력을 깎는다.
+        hp -= damage;
+
+        if (hp > 0)
+        {
+            StartCoroutine(PlayHitEffect()); //hp가 0보다 크면 피경 코루틴 적용 **10주차 추가 부분
+        }
+        if(hp<0)
+        {
+            PhotonNetwork.Destroy(gameObject);
+           // if (PhotonNetwork.IsConnected)
+           // { PhotonNetwork.Disconnect(); }
+        }
+
+    }
+
+    //피격 effect 코루틴 함수 **10주차 추가 부분
+    private IEnumerator PlayHitEffect()
+    {
+            hitEffect.SetActive(true); //피격 당했을떄 effect를 주고 
+
+            yield return new WaitForSeconds(0.3f); //0.3초 기다렸다가
+
+            hitEffect.SetActive(false); //effect 해제해주고
+    }
+    
+    private void is_PlayerRotate()
+    {
+
+        float mouse_X = Input.GetAxis("Mouse X");
+
+        mx += mouse_X * rotSpeed * Time.deltaTime;
+        mxx = mx + is_CamManager.XRebound;
+        transform.eulerAngles = new Vector3(0, mxx, 0);
+
+        //transform.foward = PlayerCam.transform.forward; 
+        //PlayerCam.transform.forward
+    }
+
+    private void is_PlayerMove()
+    {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -92,9 +144,8 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (cc.collisionFlags == CollisionFlags.Above)
         {
-            yVelocity = 0;
+            yVelocity = -0.1f;
         }
-
 
         //2-3. 만일, 키보드 spacebar 키를 입력했고, 점프를 하지 않은 상태라면..
         if (Input.GetButtonDown("Jump") && !isJumping)
@@ -103,6 +154,7 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             yVelocity = jumpPower;
             isJumping = true;
         }
+
 
         yVelocity += gravity * Time.deltaTime;
         dir.y = yVelocity;
@@ -115,47 +167,6 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else
         { Ani.SetBool("move", false); }
         //transform.position += dir * moveSpeed * Time.deltaTime;
-
-        if (hp > maxHp)
-        { hp = maxHp; }
-        HP.text = hp + " / " + maxHp;
-        hpSlider.value = (float)hp / (float)maxHp; // Slider오브젝트의 value값은 현재체력을 최대체력으로 나눈 값으로 반영된다.
-                                                   //체력을 상대적으로 생각하기 때문이다. **8주차 추가 부분
-
     }
 
-    // 플레이어의 피격 함수 **7주차 추가 부분
-    public void DamageAction(int damage)
-    {
-        // 에너미의 공격력만큼 플레이어의 체력을 깎는다.
-        hp -= damage;
-
-        if (hp > 0)
-        {
-            StartCoroutine(PlayHitEffect()); //hp가 0보다 크면 피경 코루틴 적용 **10주차 추가 부분
-        }
-
-        //피격 effect 코루틴 함수 **10주차 추가 부분
-        IEnumerator PlayHitEffect()
-        {
-            hitEffect.SetActive(true); //피격 당했을떄 effect를 주고 
-
-            yield return new WaitForSeconds(0.3f); //0.3초 기다렸다가
-
-            hitEffect.SetActive(false); //effect 해제해주고
-        }
-    }
-
-    private void is_PlayerRotate()
-    {
-
-        float mouse_X = Input.GetAxis("Mouse X");
-
-        mx += mouse_X * rotSpeed * Time.deltaTime;
-
-        transform.eulerAngles = new Vector3(0, mx, 0);
-
-        //transform.foward = PlayerCam.transform.forward; 
-        //PlayerCam.transform.forward
-    }
 }

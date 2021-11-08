@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Photon.Pun;
+using Photon.Realtime;
+
 public class is_PlayerShooting : MonoBehaviour
 {
     Animator ani;
@@ -22,6 +25,7 @@ public class is_PlayerShooting : MonoBehaviour
     //public float DelayTime = 0.5f;
     public bool isReroading = false;
 
+    public PhotonView PV;
 
     public enum State
     {
@@ -107,7 +111,7 @@ public class is_PlayerShooting : MonoBehaviour
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-
+                /*
                 // 만일 레이에 부딪힌 대상의 레이어가 "Enemy"라면 데미지 함수를 실행한다. **7주차 추가 부분
                 if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
@@ -117,17 +121,20 @@ public class is_PlayerShooting : MonoBehaviour
                     bloodEffect.transform.forward = hitInfo.normal;
                     ps2.Play();
                 }
-                // 그렇지 않다면, 레이에 부딪힌 지점에 피격 이펙트를 플레이한다. (즉 적이 아닐때)
-                else if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Player")) 
+                */
+
+                if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Player")) 
                 {
                     is_PlayerController player = hitInfo.transform.GetComponent<is_PlayerController>();
-                    player.DamageAction(22);
+                    player.photonView.RPC("DamageAction", RpcTarget.All, 22);
+                   // player.DamageAction(22);
                     bloodEffect.transform.position = hitInfo.point;
                     bloodEffect.transform.forward = hitInfo.normal;
                     ps2.Play();
 
                 }
 
+                // 그렇지 않다면, 레이에 부딪힌 지점에 피격 이펙트를 플레이한다. (즉 적이 아닐때)
                 else
                 {
                     // 피격 이펙트의 위치를 레이가 부딪힌 지점으로 이동시킨다.
@@ -164,6 +171,15 @@ public class is_PlayerShooting : MonoBehaviour
 
     void Update()
     {
+        if (!PV.IsMine)
+        {
+            return;
+        }
+
+        if (is_GManager.gm.gState != is_GManager.GameState.Run)
+        {
+            return;
+        }
         //  단발if (Input.GetMouseButtonDown(0))    
         if (Input.GetMouseButton(0))
         {

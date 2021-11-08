@@ -537,6 +537,7 @@ MonoBehaviour:
   bombFactory: {fileID: 6819069476245864851, guid: dd2c112b3924cd7469f83976d5772111,
     type: 3}
   throwPower: 15
+  PlayerCam: {fileID: 0}
 --- !u!114 &860009704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +551,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletEffect: {fileID: 100002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+  bloodEffect: {fileID: 0}
+  Amo_Label: {fileID: 0}
+  PlayerCam: {fileID: 0}
+  weaponPower: 5
+  RemainAmmo: 100
+  MaxAmmo: 25
+  magAmmo: 0
+  reloadTime: 1.5
+  isReroading: 0
 --- !u!1 &1247029409
 GameObject:
   m_ObjectHideFlags: 0

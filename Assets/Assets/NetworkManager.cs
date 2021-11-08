@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        Screen.SetResolution(960, 540, false);
+        Screen.SetResolution(1280, 700, false);
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
     }
