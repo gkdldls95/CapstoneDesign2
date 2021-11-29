@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/4_Scenes/is_prototype.unity
     guid: 5520311dbf0616e4f8f8c7c41ca170ca
-  - enabled: 1
+  - enabled: 0
     path: Assets/4_Scenes/ReadyPlace.unity
     guid: 19440952e6f77d64798790f636b7932e
   - enabled: 1

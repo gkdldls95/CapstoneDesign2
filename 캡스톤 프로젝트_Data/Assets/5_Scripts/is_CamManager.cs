@@ -12,7 +12,7 @@ public class is_CamManager : MonoBehaviour
     float myy = 0;
     public static float XRebound = 0;
     public static float YRebound = 0;
-    public static float Rebound_Power = 1.5f;
+    public static float Rebound_Power = 1f;
 
 
 
@@ -28,7 +28,7 @@ public class is_CamManager : MonoBehaviour
         myy = my + YRebound;
 
         //마우스 상하 이동 회전 변수(my)의 값을 -90도~90도 사이로 제한한다.
-        myy = -Mathf.Clamp(myy, -40f, 50f);
+        myy = -Mathf.Clamp(myy, -50f, 70f);
 
 
         transform.eulerAngles = new Vector3(myy, mxx, 0);

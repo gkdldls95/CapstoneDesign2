@@ -67,6 +67,11 @@ public class is_PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (is_GManager.gm.gState != is_GManager.GameState.Run)
         {
+            if (!PV.IsMine)
+            {
+                Destroy(GetComponentInChildren<Camera>().gameObject);
+                Destroy(GetComponentInChildren<Canvas>().gameObject);
+            }
             return;
         }
 

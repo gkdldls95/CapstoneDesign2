@@ -27,6 +27,8 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -1770,4 +1772,4 @@ ScriptsOnlyBuild:
   - Assets/4_Scenes/Lobby.unity
   - Assets/4_Scenes/ReadyPlace.unity
   - Assets/4_Scenes/MainScene.unity
-  playerPath: "C:/Users/Lee Hyun/Desktop/\uCEA1\uC2A4\uD1A4 \uD504\uB85C\uC81D\uD2B8.exe"
+  playerPath: "C:/Users/dlstj/Desktop/\uCEA1\uC2A4\uD1A4 \uD504\uB85C\uC81D\uD2B8.exe"

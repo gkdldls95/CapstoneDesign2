@@ -10,7 +10,7 @@ using Photon.Realtime;
 public class is_GManager : MonoBehaviour
 {
     public static is_GManager gm;
-    public GameObject[] prefabs;
+    //public GameObject[] prefabs;
     public GameObject[] areas;
     private List<GameObject> Players = new List<GameObject>();
     private List<GameObject> newObject = new List<GameObject>();

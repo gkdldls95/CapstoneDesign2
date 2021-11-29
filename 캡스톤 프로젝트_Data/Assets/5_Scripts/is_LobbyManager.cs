@@ -23,9 +23,9 @@ public class is_LobbyManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     private void Start()
     {
-        PhotonNetwork.Disconnect(); // 
+        //PhotonNetwork.Disconnect(); // 
         PhotonNetwork.GameVersion = gameVersion;
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectUsingSettings();  //마스터 서버 들어가기 
         joinButton.interactable = false;
         connectionInfoText.text = "마스터 서버에 접속 중...";
     }
@@ -43,7 +43,7 @@ public class is_LobbyManager : MonoBehaviourPunCallbacks
         joinButton.interactable = false;
         connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음";
         PhotonNetwork.ConnectUsingSettings();
-        connectionInfoText.text = "  (연결 재시도중)";
+        connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음(연결 재시도중)";
     }
 
     public void Connect()
@@ -59,7 +59,7 @@ public class is_LobbyManager : MonoBehaviourPunCallbacks
         {
             connectionInfoText.text = "오프라인 : 연결되지 않음";
             PhotonNetwork.ConnectUsingSettings();
-            connectionInfoText.text = "  (연결 재시도중)";
+            connectionInfoText.text = "오프라인 : 연결되지 않음(연결 재시도중)";
         }
     }
 
