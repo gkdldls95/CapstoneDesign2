@@ -62,7 +62,7 @@ public class is_CamManager : MonoBehaviour
         //사용자의 마우스 입력을 받아 물체를 회전시키고 싶다.
         //마우스 입력을 받는다.
 
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
